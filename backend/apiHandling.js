@@ -2,9 +2,7 @@ const axios = require("axios");
 // const Movie = require("./models/movie");
 // const Show = require("./models/show");
 // const Song = require("./models/song");
-const API_KEY =
-    process.env.SECRET_KEY ||
-    "b8595e6d6amshd791538f086b434p146a35jsn33db2b9b8c8f";
+const API_KEY = process.env.SECRET_KEY;
 
 const imdb = {
     url: "https://imdb8.p.rapidapi.com/title/find",
