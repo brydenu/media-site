@@ -11,27 +11,13 @@ import Signup from "./Signup";
 export default function Routing() {
     return (
         <Routes>
-            <Route path="/">
-                <Home />
-            </Route>
-            <Route path="/song">
-                <Song />
-            </Route>
-            <Route path="Movie">
-                <Movie />
-            </Route>
-            <Route path="/show">
-                <Show />
-            </Route>
-            <Route path="/profile">
-                <Profile />
-            </Route>
-            <Route path="/login">
-                <Login />
-            </Route>
-            <Route path="/signup">
-                <Signup />
-            </Route>
+            <Route path="/" element={<Home />} />
+            <Route path="/song" element={<Song />} />
+            <Route path="/movie" element={<Movie />} />
+            <Route path="/show" element={<Show />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
         </Routes>
     );
 }
