@@ -4,8 +4,8 @@
 
 require("dotenv").config();
 
-const SECRET_KEY = process.env.SECRET_KEY || "secret-dev";
-
+const API_KEY = process.env.SECRET_KEY;
+console.log(API_KEY);
 const PORT = +process.env.PORT || 3001;
 
 // Use dev database, testing database, or via env var, production database
@@ -19,7 +19,7 @@ function getDatabaseUri() {
 const BCRYPT_WORK_FACTOR = process.env.NODE_ENV === "test" ? 1 : 12;
 
 module.exports = {
-    SECRET_KEY,
+    API_KEY,
     PORT,
     BCRYPT_WORK_FACTOR,
     getDatabaseUri,
