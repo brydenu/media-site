@@ -1,0 +1,15 @@
+.App {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-flow: column wrap;
+    align-content: center;
+}
+
+.main {
+    display: flex;
+    flex-flow: column wrap;
+    margin-top: 10px;
+    align-content: center;
+}

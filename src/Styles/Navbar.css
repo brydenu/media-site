@@ -1,0 +1,47 @@
+.navbar {
+    background-color: cyan;
+    margin-top: 10px;
+    overflow: hidden;
+    position:sticky;
+    width: 80%;
+    height: 40px;
+    border-bottom: 1px solid darkcyan;
+    border-radius: 10px;
+    z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, .4);
+}
+
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    flex-grow:2;
+    margin-left: 5px;
+}
+
+.logo {
+    background-color: orange;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    flex-grow: 3;
+    justify-content: space-evenly;
+}
+
+.nav > a {
+    background-color: orange;
+    height: 100%;
+    width: 100%;
+    border-left: 1px solid black;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    justify-content: center;
+}
+
+.nav > a:hover {
+    background-color: yellow;
+}
