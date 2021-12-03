@@ -1,0 +1,60 @@
+.main-home {
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-content: center;
+    margin-top: 20px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.card-body {
+    display: flex;
+    justify-content: center;
+}
+
+.results-all {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.movies-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    border: 2px solid blue;
+}
+
+.shows-wrapper {
+    display: flex;
+    flex-flow: column nowrap;;
+    border: 2px solid green;
+}
+
+.songs-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    border: 2px solid purple;
+}
+
+.movies-results {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.shows-results {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.songs-results {
+    display: flex;
+    flex-flow: row wrap;    
+}
+
+.group-title {
+    align-self: center;
+}

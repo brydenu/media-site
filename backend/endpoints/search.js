@@ -1,14 +1,17 @@
 const express = require("express");
 const searchAll = require("../apiHandling");
+const { saveQuery } = require("../dbHandling");
 
 const router = express.Router();
 
 router.get("/:query", async function (req, res, next) {
     try {
-        const mediaInfo = await searchAll(req.params.query);
-        return res.json({ mediaInfo });
+        const searchTerm = req.params.query;
+        const queryInfo = await saveQuery(searchTerm);
+        const mediaInfo = await searchAll(searchTerm);
+        return res.json({ mediaInfo, queryInfo });
     } catch (e) {
-        console.log("!!!!!!!!!!!!!!there was an error!!!!!!!!!!!!!!!!");
+        console.error("!!!!!!!!!!!!!!there was an error!!!!!!!!!!!!!!!!");
         return next(e);
     }
 });

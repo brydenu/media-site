@@ -1,25 +1,18 @@
-import React, { useState } from "react";
-import Backend from "../api";
+import React, { useContext } from "react";
+import AppContext from "../Helpers/Context";
+import "../Styles/Searchbar.css";
 
-export default function Searchbar({ type }) {
-    const [query, setQuery] = useState("");
+export default function Searchbar({ location }) {
+    const { setQuery } = useContext(AppContext).queryState;
+    const { handleSubmit } = useContext(AppContext).handlers;
 
-    const handleSubmit = (evt) => {
-        evt.preventDefault();
-        async function apiSearch() {
-            const res = await Backend.searchAll(query);
-            console.log(res);
-        }
-        apiSearch();
-    };
     const handleChange = (evt) => {
         const { value } = evt.target;
         setQuery((curr) => value);
     };
-    console.log(query);
     return (
-        <form onSubmit={handleSubmit}>
-            <label htmlFor={"search " + type} />
+        <form className={`search search-${location}`} onSubmit={handleSubmit}>
+            <label htmlFor="q" />
             <input type="text" name="q" onChange={handleChange}></input>
             <button type="button" onClick={handleSubmit}>
                 Search

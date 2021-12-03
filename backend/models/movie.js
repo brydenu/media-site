@@ -3,7 +3,8 @@
 const db = require("../db");
 
 class Movie {
-    /** Organizes movie information from API request to be ready to put into the database for faster subsequent retrievals.
+    /**
+     * Stores data from api requests into database for faster subsequent retrieval.
      *
      * Data: { id, title, release_year, image_url, runtime }
      */
@@ -22,7 +23,7 @@ class Movie {
     }
 
     // Find movie in database
-    static async find({ id }) {
+    static async find(id) {
         const res = await db.query(
             `
             SELECT id, title, release_year, image_url, runtime

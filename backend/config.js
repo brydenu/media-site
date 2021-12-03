@@ -5,7 +5,6 @@
 require("dotenv").config();
 
 const API_KEY = process.env.SECRET_KEY;
-console.log(API_KEY);
 const PORT = +process.env.PORT || 3001;
 
 // Use dev database, testing database, or via env var, production database

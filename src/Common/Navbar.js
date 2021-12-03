@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Searchbar from "./Searchbar";
 import "../Styles/Navbar.css";
 
 export default function Navbar() {
@@ -8,6 +9,7 @@ export default function Navbar() {
             <div className="logo-wrapper">
                 <p className="logo">Media Site</p>
             </div>
+            <Searchbar location="nav" />
             <div className="nav-options">
                 <Link to="/">Home</Link>
                 <Link to="/show">Show</Link>

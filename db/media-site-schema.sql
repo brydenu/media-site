@@ -1,5 +1,6 @@
 CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
+    username VARCHAR(20) PRIMARY KEY,
+    password TEXT NOT NULL,
     first_name TEXT,
     last_name TEXT,
     country_code VARCHAR(2)
@@ -7,8 +8,12 @@ CREATE TABLE users (
 
 CREATE TABLE queries (
     id SERIAL PRIMARY KEY,
-    userid INTEGER REFERENCES users,
-    search_term TEXT
+    search_term TEXT NOT NULL
+);
+
+CREATE TABLE users_queries (
+    username TEXT REFERENCES users,
+    query_id INTEGER REFERENCES queries
 );
 
 CREATE TABLE songs (

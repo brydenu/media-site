@@ -9,11 +9,11 @@ class Show {
      */
     static async create({ id, title, image_url, start_year, episode_count }) {
         const res = await db.query(
-            `INSERT INTO movies (id,
+            `INSERT INTO shows (id,
                                 title,
                                 image_url,
                                 start_year,
-                                episode_count,)
+                                episode_count)
             VALUES ($1, $2, $3, $4, $5)
             RETURNING id, title, image_url, start_year, episode_count`,
             [id, title, image_url, start_year, episode_count]
@@ -22,7 +22,7 @@ class Show {
     }
 
     // Find show in database
-    static async find({ id }) {
+    static async find(id) {
         const res = await db.query(
             `
             SELECT id, title, image_url, start_year, episode_count
@@ -31,6 +31,7 @@ class Show {
             `,
             [id]
         );
+        console.log("show find completed without errors");
         return res.rows[0];
     }
 }

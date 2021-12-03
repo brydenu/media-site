@@ -1,6 +1,5 @@
 import React from "react";
 
-const SearchContext = React.createContext();
-const UserContext = React.createContext();
+const AppContext = React.createContext();
 
-export { SearchContext, UserContext }
+export default AppContext;

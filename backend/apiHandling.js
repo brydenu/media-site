@@ -1,8 +1,6 @@
 const axios = require("axios");
-// const Movie = require("./models/movie");
-// const Show = require("./models/show");
-// const Song = require("./models/song");
-const API_KEY = process.env.SECRET_KEY;
+const { API_KEY } = require("./config.js");
+const { saveQuery, saveMovie, saveSong, saveShow } = require("./dbHandling.js");
 
 const imdb = {
     url: "https://imdb8.p.rapidapi.com/title/find",
@@ -16,8 +14,13 @@ const genius = {
     songLookup: "https://genius.p.rapidapi.com/songs",
 };
 
-// Manages requests so one request will search multiple tables and
-// query multiple APIs correctly.
+/**
+ * search - Manages requests so one request will search multiple tables and query multiple APIs correctly.
+ *
+ * term => the query to search
+ *
+ * api => which api to query
+ */
 
 async function search(term, api) {
     const { url, host } = api === "imdb" ? imdb : genius;
@@ -34,7 +37,15 @@ async function search(term, api) {
     return organizeData(res.data, api);
 }
 
-function organizeData(res, api) {
+/**
+ * organizeData - Sends response objects to the right filtering function.
+ *
+ * res => response object from an api request.
+ *
+ * api => api used to get the data (either imdb or genius), this is the condition for which filter function is used.
+ */
+
+async function organizeData(res, api) {
     if (api === "imdb") {
         return filterIMDB(res.results);
     } else if (api === "genius") {
@@ -42,8 +53,13 @@ function organizeData(res, api) {
     }
 }
 
-// Creates objects of the return data that is easier inserted to the DB
-function filterIMDB(res) {
+/**
+ * filterIMDB - Creates objects of the return data formatted for database and frontend.
+ *
+ * res => response object to be formatted. Contains data for either a show or movie.
+ *
+ */
+async function filterIMDB(res) {
     const showsArr = [];
     const moviesArr = [];
     for (let item of res) {
@@ -52,9 +68,10 @@ function filterIMDB(res) {
                 id: item.id || "N/A",
                 title: item.title || "N/A",
                 release_year: item.year || "N/A",
-                image_url: item.image.url || "N/A",
+                image_url: item.image_url || "N/A",
                 runtime: item.runningTimeInMinutes || "N/A",
             };
+            await saveMovie(newMovie);
             moviesArr.push(newMovie);
         } else if (
             item.titleType === "tvSeries" ||
@@ -67,6 +84,7 @@ function filterIMDB(res) {
                 image_url: item.image.url || "N/A",
                 episode_count: item.numberOfEpisodes || "N/A",
             };
+            await saveShow(newShow);
             showsArr.push(newShow);
         }
     }
@@ -76,7 +94,11 @@ function filterIMDB(res) {
     };
 }
 
-// Creates objects of the return data that is easier inserted to the DB
+/**
+ * filterGenius - Creates objects of the return data formatted for database and frontend.
+ *
+ * geniusRes => Response object to be formatted. Will contain song data.
+ */
 async function filterGenius(geniusRes) {
     const songsArr = [];
     for (let item of geniusRes) {
@@ -91,10 +113,11 @@ async function filterGenius(geniusRes) {
                 image_url: song.song_art_image_url || "N/A",
                 link: song.media[0].url || "N/A",
             };
+            await saveSong(newSong);
             songsArr.push(newSong);
         } catch (e) {
-            console.log(
-                "could not find information on this song with id: ",
+            console.error(
+                `could not find more info on song ${item.result.title}. id: `,
                 item.result.id
             );
         }
@@ -102,7 +125,11 @@ async function filterGenius(geniusRes) {
     return { songs: songsArr };
 }
 
-// Gets more information about a song, since the normal find-song endpoint isn't as detailed.
+/**
+ * getSongInfo - Gets more information about a song.
+ *
+ * songId => ID of a song in genius's DB. Is obtained from initial search response object.
+ */
 async function getSongInfo(songId) {
     const res = await axios.request({
         method: "GET",
@@ -115,13 +142,18 @@ async function getSongInfo(songId) {
     return res.data.response.song;
 }
 
-// Main search function- searches both databases and organizes data to be inserted to DB.
+/**
+ * searchAll - Main search function. Searches both databases and organizes data to be inserted to DB.
+ *
+ * term => Term to be searched for.
+ */
 async function searchAll(term) {
+    console.log(`Search received. Searching for "${term}".`);
     const { movies, shows } = await search(term, "imdb");
     const { songs } = await search(term, "genius");
-    console.log("movies: ", movies);
+    // console.log("movies: ", movies);
     console.log("shows: ", shows);
-    console.log("songs: ", songs);
+    // console.log("songs: ", songs);
     return { movies, shows, songs };
 }
 

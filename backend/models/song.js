@@ -17,7 +17,7 @@ class Song {
         link,
     }) {
         const res = await db.query(
-            `INSERT INTO shows (id,
+            `INSERT INTO songs (id,
                                 title,
                                 artist,
                                 album,
@@ -32,7 +32,7 @@ class Song {
     }
 
     // Find song in database
-    static async find({ id }) {
+    static async find(id) {
         const res = await db.query(
             `
             SELECT id, title, artist, album, release_date, image_url, link
