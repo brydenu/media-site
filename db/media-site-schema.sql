@@ -2,8 +2,7 @@ CREATE TABLE users (
     username VARCHAR(20) PRIMARY KEY,
     password TEXT NOT NULL,
     first_name TEXT,
-    last_name TEXT,
-    country_code VARCHAR(2)
+    last_name TEXT
 );
 
 CREATE TABLE queries (
@@ -12,34 +11,60 @@ CREATE TABLE queries (
 );
 
 CREATE TABLE users_queries (
+    id SERIAL PRIMARY KEY,
     username TEXT REFERENCES users,
     query_id INTEGER REFERENCES queries
 );
 
 CREATE TABLE songs (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
+    api_id INTEGER,
     title TEXT,
-    artist TEXT,
+    primary_artist TEXT,
+    all_artists TEXT,
     album TEXT,
     release_date TEXT,
     image_url TEXT,
-    link TEXT
+    embed TEXT
 );
 
 CREATE TABLE shows (
-    id TEXT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
+    api_id TEXT,
     title TEXT,
+    rating TEXT,
+    first_aired TEXT,
+    genre TEXT,
+    writer TEXT,
+    plot TEXT,
+    actors TEXT,
+    awards TEXT,
+    episode_length TEXT,
     image_url TEXT,
-    start_year INTEGER,
-    episode_count INTEGER
+    years TEXT,
+    imdb_rating TEXT,
+    imdb_votes TEXT,
+    seasons TEXT
 );
 
 CREATE TABLE movies (
-    id TEXT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
+    api_id TEXT,
     title TEXT,
-    release_year INTEGER,
+    rating TEXT,
+    genre TEXT,
+    release_date TEXT,
     image_url TEXT,
-    runtime INTEGER
+    runtime TEXT,
+    director TEXT,
+    writer TEXT,
+    plot TEXT,
+    year_released TEXT,
+    actors TEXT,
+    awards TEXT,
+    imdb_rating TEXT,
+    imdb_votes TEXT,
+    earnings TEXT
 );
 
 CREATE TABLE songs_queries (
@@ -51,11 +76,11 @@ CREATE TABLE songs_queries (
 CREATE TABLE shows_queries (
     id SERIAL PRIMARY KEY,
     query_id INTEGER REFERENCES queries,
-    show_id TEXT REFERENCES shows
+    show_id INTEGER REFERENCES shows
 );
 
 CREATE TABLE movies_queries (
     id SERIAL PRIMARY KEY,
     query_id INTEGER REFERENCES queries,
-    movie_id  TEXT REFERENCES movies
+    movie_id INTEGER REFERENCES movies
 );

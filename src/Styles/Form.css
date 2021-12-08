@@ -1,0 +1,49 @@
+.custom-form {
+    margin: 0 0 5%;
+    border-radius: 4px;
+    border: 1px solid black;
+    display: flex;
+    flex-flow: column nowrap;
+    background-color: grey;
+    padding: 10px;
+    box-shadow: 0 4px 5px rgba(10,10,10, .6);
+}
+
+.form-group {
+    margin: 5px;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.checkbox-group:hover {
+    cursor: default;
+}
+
+.custom-checkbox {
+    height: 10px;
+    width: 10px;
+    border: 1px solid black;
+}
+
+.custom-checkbox:hover {
+    cursor: pointer;
+}
+
+.remembered-true {
+    background-color: navy;
+}
+
+.remembered-false {
+    background-color: white;
+}
+
+.form-button {
+    margin: 5px;
+    border: 1px solid black;
+    border-radius: 4px;
+}

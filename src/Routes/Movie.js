@@ -1,5 +1,6 @@
 import React from "react";
+import MediaPage from "../Common/MediaPage";
 
 export default function Movie() {
-    return <div className="main movie">Movie page</div>;
+    return <MediaPage mediaType="movie" />;
 }

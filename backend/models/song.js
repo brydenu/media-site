@@ -5,41 +5,71 @@ const db = require("../db");
 class Song {
     /** Organizes song information from API request to be ready to put into the database for faster subsequent retrievals.
      *
-     * Data: { id, title, artist, album, release_date, image_url, link }
+     * Data: { api_id, title, primary_artist, all_artists, album, release_date, image_url, embed }
      */
     static async create({
-        id,
+        api_id,
         title,
-        artist,
+        primary_artist,
+        all_artists,
         album,
         release_date,
         image_url,
-        link,
+        embed,
     }) {
         const res = await db.query(
-            `INSERT INTO songs (id,
-                                title,
-                                artist,
-                                album,
-                                release_date,
-                                image_url,
-                                link)
-            VALUES ($1, $2, $3, $4, $5, $6, $7)
-            RETURNING id, title, artist, album, release_date, image_url, link`,
-            [id, title, artist, album, release_date, image_url, link]
+            `INSERT INTO songs (        
+                api_id,
+                title,
+                primary_artist,
+                all_artists,
+                album,
+                release_date,
+                image_url,
+                embed
+            )
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+            RETURNING 
+                id,         
+                api_id,
+                title,
+                primary_artist,
+                all_artists,
+                album,
+                release_date,
+                image_url
+                embed`,
+            [
+                api_id,
+                title,
+                primary_artist,
+                all_artists,
+                album,
+                release_date,
+                image_url,
+                embed,
+            ]
         );
         return res.rows[0];
     }
 
     // Find song in database
-    static async find(id) {
+    static async find(api_id) {
         const res = await db.query(
             `
-            SELECT id, title, artist, album, release_date, image_url, link
+            SELECT id,         
+                api_id,
+                title,
+                primary_artist,
+                all_artists,
+                album,
+                release_date,
+                image_url,
+                embed
             FROM songs
-            WHERE id = $1
+            WHERE api_id = $1
             `,
-            [id]
+            [api_id]
         );
         return res.rows[0];
     }

@@ -3,13 +3,13 @@
 const db = require("../db");
 
 class UsersQueries {
-    static async create(user_id, query_id) {
+    static async create(username, query_id) {
         const res = await db.query(
             `
-        INSERT INTO users_queries (usr_id, q_id)
-        VALUES ($1, $2)
-        RETURNING id, usr_id, q_id`,
-            [user_id, query_id]
+            INSERT INTO users_queries (username, query_id)
+            VALUES ($1, $2)
+            RETURNING id, username, query_id`,
+            [username, query_id]
         );
         return res.rows[0];
     }
@@ -17,12 +17,25 @@ class UsersQueries {
     static async find(id) {
         const res = await db.query(
             `
-        SELECT id, usr_id, q_id
-        FROM users_queries
-        WHERE id=$1`,
+            SELECT id, username, query_id
+            FROM users_queries
+            WHERE id=$1`,
             [id]
         );
         return res.rows[0];
+    }
+
+    static async getUserQueries(username) {
+        const res = await db.query(
+            `
+                SELECT query_id 
+                FROM users_queries
+                WHERE username=$1
+            `,
+            [username]
+        );
+        console.log(res.rows);
+        return res.rows;
     }
 }
 

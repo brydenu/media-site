@@ -6,31 +6,112 @@ class Movie {
     /**
      * Stores data from api requests into database for faster subsequent retrieval.
      *
-     * Data: { id, title, release_year, image_url, runtime }
+     * Data: { api_id, title, release_year, image_url, runtime }
      */
-    static async create({ id, title, release_year, image_url, runtime }) {
+    static async create({
+        api_id,
+        title,
+        rating,
+        genre,
+        release_date,
+        image_url,
+        runtime,
+        director,
+        writer,
+        plot,
+        year_released,
+        actors,
+        awards,
+        imdb_rating,
+        imdb_votes,
+        earnings,
+    }) {
         const res = await db.query(
-            `INSERT INTO movies (id,
-                                title,
-                                release_year,
-                                image_url,
-                                runtime)
-            VALUES ($1, $2, $3, $4, $5)
-            RETURNING id, title, release_year, image_url, runtime`,
-            [id, title, release_year, image_url, runtime]
+            `INSERT INTO movies (
+                api_id,
+                title,
+                rating,
+                genre,
+                release_date,
+                image_url,
+                runtime,
+                director,
+                writer,
+                plot,
+                year_released,
+                actors,
+                awards,
+                imdb_rating,
+                imdb_votes,
+                earnings
+                )
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+            RETURNING
+                id,
+                api_id,
+                title,
+                rating,
+                genre,
+                release_date,
+                image_url,
+                runtime,
+                director,
+                writer,
+                plot,
+                year_released,
+                actors,
+                awards,
+                imdb_rating,
+                imdb_votes,
+                earnings`,
+            [
+                api_id,
+                title,
+                rating,
+                genre,
+                release_date,
+                image_url,
+                runtime,
+                director,
+                writer,
+                plot,
+                year_released,
+                actors,
+                awards,
+                imdb_rating,
+                imdb_votes,
+                earnings,
+            ]
         );
         return res.rows[0];
     }
 
     // Find movie in database
-    static async find(id) {
+    static async find(api_id) {
         const res = await db.query(
             `
-            SELECT id, title, release_year, image_url, runtime
+            SELECT 
+                id, 
+                api_id,
+                title,
+                rating,
+                genre,
+                release_date,
+                image_url,
+                runtime,
+                director,
+                writer,
+                plot,
+                year_released,
+                actors,
+                awards,
+                imdb_rating,
+                imdb_votes,
+                earnings
             FROM movies
-            WHERE id = $1
+            WHERE api_id = $1
             `,
-            [id]
+            [api_id]
         );
         return res.rows[0];
     }

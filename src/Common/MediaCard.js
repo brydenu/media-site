@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Card from "./Card";
 import DEFAULT_IMAGE from "./img-not-found.jpeg";
 import shortenText from "../Helpers/shortenText";
@@ -8,68 +9,37 @@ import "../Styles/MediaCard.css";
  *
  */
 export default function MediaCard({ mediaData, mediaClass }) {
-    const {
-        title,
-        id,
-        image_url,
-        release_year,
-        runtime,
-        episode_count,
-        start_year,
-        album,
-        artist,
-        link,
-        release_date,
-    } = mediaData;
+    const { title, api_id } = mediaData;
+    let image_url =
+        mediaData.image_url === "N/A" ? DEFAULT_IMAGE : mediaData.image_url;
 
-    const createBody = () => {
-        let result;
-        if (mediaClass === "movie") {
-            result = (
-                <>
-                    <p>Release Year: {release_year}</p>
-                    <p>Runtime: {runtime}</p>
-                </>
-            );
-        } else if (mediaClass === "show") {
-            result = (
-                <>
-                    <p>Start Year: {start_year}</p>
-                    <p>Episode Count: {episode_count}</p>
-                </>
-            );
-        } else if (mediaClass === "song") {
-            result = (
-                <>
-                    <p>Artist/Group: {shortenText(artist)}</p>
-                    <p>Album: {shortenText(album)}</p>
-                    <p>Release Date: {release_date}</p>
-                </>
-            );
-        }
-        return (
-            <>
-                <a href={link || "#"}>
-                    <img
-                        src={image_url || DEFAULT_IMAGE}
-                        className="media-image"
-                        alt={title}
-                    />
-                </a>
-                {result}
-            </>
-        );
-    };
-    const resultHeader = (
-        <h3 className={`result result-header ${mediaClass}`}>
-            {shortenText(title)}
-        </h3>
+    const headerContent = (
+        <>
+            <h3 className={`result result-header ${mediaClass}`}>
+                {shortenText(title)}
+            </h3>
+            <p className="sub-header">
+                (
+                {mediaData.year_released ||
+                    mediaData.primary_artist ||
+                    mediaData.years}
+                )
+            </p>
+        </>
+    );
+
+    const bodyContent = (
+        <>
+            <Link to={`/${mediaClass}/${api_id}`} className="image-wrapper">
+                <img src={image_url} className="media-image" alt={title} />
+            </Link>
+        </>
     );
     return (
         <Card
-            header={resultHeader}
-            body={createBody()}
-            cardClass={`media-card ${id}`}
+            header={headerContent}
+            body={bodyContent}
+            cardClass={`media-card ${api_id}`}
         />
     );
 }

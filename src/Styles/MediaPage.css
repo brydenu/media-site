@@ -1,0 +1,94 @@
+.media-page.card-wrapper.main {
+    width: 60%;
+    min-width: 700px;
+    padding: 20px;
+    margin: 10px 0 50px;
+}
+
+.card-content.media-page {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    margin: 0;
+}
+
+.back-btn {
+    background-color: blue;
+    width: 60%;
+    min-width: 700px;
+    margin: 0 0 10px;
+    border-radius: 4px;
+    border: 1px solid black;
+    height: 40px;
+    color: white;
+    box-shadow: 0 5px 8px rgba(10, 10, 10, .7);
+    text-align: center;
+    transition-duration: 200ms;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-btn:hover {
+    background-color: darkblue;
+    cursor: pointer;
+}
+
+.back-btn:active {
+    background-color: white;
+    color: black;
+}
+
+
+.card-header {
+    width: 300px;
+}
+
+.media-page-title {
+    margin: 15px 0 15px;
+}
+
+.media-page.subheader {
+    margin: 0 0 15px;
+    text-align: center;
+}
+
+.card-body {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.page-image {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin: 0;
+    padding: 0;
+    box-shadow: 0 5px 8px rgba(10, 10, 10, .8)
+}
+
+.page-info {
+    box-shadow: 0 5px 8px rgba(10, 10, 10, .7);
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid black;
+    background-color: grey;
+    width: 90%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+
+.page-info > p {
+    margin: 5px 0;
+    border-radius: 4px;
+    border: 1px solid black;
+    box-shadow: 0 5px 8px rgba(10, 10, 10, .4);
+    width: 95%;
+    background-color: white;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    padding: 5px 0;
+}

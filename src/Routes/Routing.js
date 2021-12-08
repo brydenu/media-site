@@ -12,9 +12,9 @@ export default function Routing() {
     return (
         <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/song" element={<Song />} />
-            <Route path="/movie" element={<Movie />} />
-            <Route path="/show" element={<Show />} />
+            <Route path="/song/:id" element={<Song />} />
+            <Route path="/movie/:id" element={<Movie />} />
+            <Route path="/show/:id" element={<Show />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
