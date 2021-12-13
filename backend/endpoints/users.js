@@ -22,7 +22,13 @@ router.post("/register", async function (req, res, next) {
             last_name: req.body.lastName,
         };
         const found = await User.find(userInfo.username);
-        if (found) return res.json({ error: "username already exists" });
+        if (found)
+            return res.json({
+                error: {
+                    message: "Username already exists",
+                    type: "unique_username",
+                },
+            });
         const user = await User.create(userInfo);
         // const token = createToken(user);
         return res.status(201).json({ user });

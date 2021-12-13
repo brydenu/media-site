@@ -21,6 +21,7 @@ export default function App() {
     const [query, setQuery] = useState("");
     const [searchedFor, setSearchedFor] = useState("");
     const [remember, setRemember] = useRemember(token, user);
+    const [errorState, setErrorState] = useState(null);
 
     const searchAPI = (q = null) => {
         async function apiSearch() {
@@ -60,6 +61,7 @@ export default function App() {
         rememberState: { remember, setRemember },
         searchedForState: { searchedFor, setSearchedFor },
         loadingState: { loading, setLoading },
+        errorState: { errorState, setErrorState },
     };
     return (
         <div className="App">

@@ -8,6 +8,7 @@ import Backend from "../api";
 export default function Signup() {
     const { setToken } = useContext(AppContext).tokenState;
     const { setUser } = useContext(AppContext).userState;
+    const { errorState, setErrorState } = useContext(AppContext).errorState;
     const navigate = useNavigate();
     const [userInput, setUserInput] = useState({
         username: "",
@@ -15,7 +16,6 @@ export default function Signup() {
         lastName: "",
         password: "",
     });
-    const [usernameError, setUsernameError] = useState(false);
     const headerContent = <h1 className="signup-title">Sign up</h1>;
     const formFields = [
         {
@@ -47,9 +47,10 @@ export default function Signup() {
         evt.preventDefault();
         const data = await Backend.registerUser(userInput);
         if (data.error) {
-            setUsernameError(true);
+            setErrorState(data.error);
             return;
         }
+        setErrorState(null);
         const newUser = data.user;
         newUser.queries = [];
         setUser(newUser);
