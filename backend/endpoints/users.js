@@ -2,6 +2,7 @@ const express = require("express");
 const User = require("../models/user");
 const createToken = require("../helpers/token");
 const { BadRequestError } = require("../helpers/errorHandling");
+const { getSearchTerms } = require("../helpers/dbHandling");
 
 const router = express.Router();
 
@@ -21,10 +22,10 @@ router.post("/register", async function (req, res, next) {
             last_name: req.body.lastName,
         };
         const found = await User.find(userInfo.username);
-        if (found) return console.error("Username already exists.");
+        if (found) return res.json({ error: "username already exists" });
         const user = await User.create(userInfo);
-        const token = createToken(user);
-        return res.status(201).json({ token });
+        // const token = createToken(user);
+        return res.status(201).json({ user });
     } catch (e) {
         return next(e);
     }
@@ -38,6 +39,8 @@ router.post("/login", async function (req, res, next) {
         const { username, password } = req.body;
         const user = await User.authenticate(username, password);
         const token = createToken(user);
+        const queries = await getSearchTerms(user.username);
+        user.queries = queries;
         return res.json({ token, user });
     } catch (e) {
         return next(e);
@@ -56,6 +59,8 @@ router.patch("/:username", async function (req, res, next) {
             last_name: req.body.lastName,
         };
         const user = await User.update(req.params.username, sqlUser);
+        const queries = await getSearchTerms(user.username);
+        user.queries = queries;
         return res.json({ user });
     } catch (e) {
         return next(e);

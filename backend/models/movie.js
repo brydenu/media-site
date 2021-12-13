@@ -115,6 +115,35 @@ class Movie {
         );
         return res.rows[0];
     }
+
+    static async dbFind(id) {
+        const res = await db.query(
+            `
+            SELECT 
+                id, 
+                api_id,
+                title,
+                rating,
+                genre,
+                release_date,
+                image_url,
+                runtime,
+                director,
+                writer,
+                plot,
+                year_released,
+                actors,
+                awards,
+                imdb_rating,
+                imdb_votes,
+                earnings
+            FROM movies
+            WHERE id = $1
+            `,
+            [id]
+        );
+        return res.rows[0];
+    }
 }
 
 module.exports = Movie;

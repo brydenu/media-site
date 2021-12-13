@@ -20,9 +20,7 @@ export default function MediaCard({ mediaData, mediaClass }) {
             </h3>
             <p className="sub-header">
                 (
-                {mediaData.year_released ||
-                    mediaData.primary_artist ||
-                    mediaData.years}
+                {mediaData.year_released || mediaData.artist || mediaData.years}
                 )
             </p>
         </>
@@ -39,7 +37,8 @@ export default function MediaCard({ mediaData, mediaClass }) {
         <Card
             header={headerContent}
             body={bodyContent}
-            cardClass={`media-card ${api_id}`}
+            cardClass={`media-card ${api_id} ${mediaClass}s-color`}
+            cardKey={mediaData.api_id}
         />
     );
 }

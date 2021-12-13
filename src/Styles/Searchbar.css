@@ -2,15 +2,17 @@
     width: 90%;
     display: flex;
     flex-flow: column nowrap;
+    justify-content: center;
     align-items: center;
-    padding: 35px 0;
+    height: 215px;
     box-shadow: 0 4px 5px rgba(10,10,10, .6);
     border-radius: 4px;
     border: 1px solid black;
     margin: 10px 0;
+    background-color: silver;
 }
 
-.home > .card-header {
+.home > .card-header, .search > .card-header {
     height: 100%;
     width: 100%;
 }
@@ -18,9 +20,9 @@
 
 .search-home > button {
     width: 30vw;
-    height: 30px;
+    height: 35px;
     margin: 10px;
-    border-radius: 40px;
+    border-radius: 4px;
     background-color: blue;
     outline: none;
     border: 1px solid black;
@@ -36,23 +38,25 @@
     cursor: pointer;
 }
 
-.search-home > button:active {
-    transform: translate(0, .2vh);
-    background-color: white;
-    color: black;
-}
-
 .search-home > input {
-    border-radius: 30px;
+    border-radius: 4px;
     outline: 0;
     border: 1px solid black;
     width: 50%;
-    height: 50px;
+    min-width:250px;
+    height: 45px;
     text-align: center;
     transition-duration: 300ms;
     font-size: 1.5em;
+    box-shadow: 0 4px 5px rgba(10,10,10, .6);
 }
 
 .search-home > input:focus {
     width: 70%;
+    min-width: 300px;
+}
+
+.search > button:active:hover {
+    background-color: white;
+    color: black;
 }

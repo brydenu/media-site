@@ -6,9 +6,11 @@ const router = express.Router();
 
 router.post("/", async function (req, res, next) {
     try {
-        console.log("req.body: ", req.body);
-        const { query, username } = req.body;
-        const queryInfo = await saveQuery(query, username);
+        const { query, data, username } = req.body;
+        let queryInfo = await saveQuery(query, data, username);
+        if (username) {
+            queryInfo = await getSearchTerms(username);
+        }
         return res.json({ queryInfo });
     } catch (e) {
         return next(e);
@@ -18,7 +20,6 @@ router.post("/", async function (req, res, next) {
 router.get("/:username", async function (req, res, next) {
     try {
         const username = req.params.username;
-        console.log("username: ", username);
         const queries = await getSearchTerms(username);
         return res.json({ queries });
     } catch (e) {

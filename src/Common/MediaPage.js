@@ -2,20 +2,26 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Card from "./Card";
 import Backend from "../api";
+import DEFAULT_IMAGE from "./img-not-found.jpeg";
 import "../Styles/MediaPage.css";
 
 export default function MediaPage({ mediaType }) {
     const { id } = useParams();
     const [pageInfo, setPageInfo] = useState(null);
     const navigate = useNavigate();
+    let headerContent;
+    let bodyContent;
 
-    useEffect(function fetchInfoFromBackend() {
-        async function fetchInfo() {
-            const res = await Backend.getInfo(mediaType, id);
-            setPageInfo(res);
-        }
-        fetchInfo();
-    }, []);
+    useEffect(
+        function fetchInfoFromBackend() {
+            async function fetchInfo() {
+                const res = await Backend.getInfo(mediaType, id);
+                setPageInfo(res);
+            }
+            fetchInfo();
+        },
+        [id, mediaType]
+    );
 
     const generateInfo = () => {
         if (mediaType === "movie") {
@@ -115,15 +121,12 @@ export default function MediaPage({ mediaType }) {
                 </>
             );
         } else if (mediaType === "song") {
-            const { album, all_artists, primary_artist, release_date } =
+            const { album, artist, genre, song_length, release_date } =
                 pageInfo;
             return (
                 <>
                     <p>
-                        <b>Primary Artist/Group:</b> {primary_artist}
-                    </p>
-                    <p>
-                        <b>Other artists/groups:</b> {all_artists}
+                        <b>Artist/Group:</b> {artist}
                     </p>
                     <p>
                         <b>Album:</b> {album}
@@ -131,9 +134,26 @@ export default function MediaPage({ mediaType }) {
                     <p>
                         <b>Release date:</b> {release_date}
                     </p>
+                    <p>
+                        <b>Length:</b> {song_length}
+                    </p>
+                    <p>
+                        <b>Genre:</b> {genre}
+                    </p>
                 </>
             );
         }
+    };
+
+    const generateSubheader = () => {
+        if (mediaType === "song") {
+            return (
+                <audio controls className="audio-player">
+                    <source src={pageInfo.preview} type="audio/x-m4a"></source>
+                </audio>
+            );
+        }
+        return <i className="media-page subheader">{pageInfo.plot}</i>;
     };
 
     const handleGoBack = (evt) => {
@@ -147,34 +167,22 @@ export default function MediaPage({ mediaType }) {
         </div>
     );
 
-    let headerContent;
-    let bodyContent;
-    const generateSubheader = () => {
-        if (mediaType === "song") {
-            function createEmbed() {
-                return { __html: pageInfo.embed };
-            }
-            return (
-                <i
-                    className="media-page subheader"
-                    dangerouslySetInnerHTML={createEmbed()}
-                />
-            );
-        }
-        return <i className="media-page subheader">{pageInfo.plot}</i>;
-    };
     if (pageInfo === null) {
         headerContent = <h1>Loading</h1>;
         bodyContent = <h1>Loading</h1>;
     } else {
         headerContent = (
-            <>
+            <div className="image-wrapper">
                 <img
-                    src={pageInfo.image_url}
+                    src={
+                        pageInfo.image_url === "N/A"
+                            ? DEFAULT_IMAGE
+                            : pageInfo.image_url
+                    }
                     alt={pageInfo.title}
                     className="page-image"
                 />
-            </>
+            </div>
         );
         bodyContent = (
             <>
@@ -198,3 +206,9 @@ export default function MediaPage({ mediaType }) {
         </>
     );
 }
+
+// src={
+//     pageInfo.image_url === "N/A"
+//         ? DEFAULT_IMAGE
+//         : pageInfo.image_url
+// }

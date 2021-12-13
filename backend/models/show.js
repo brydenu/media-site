@@ -58,7 +58,9 @@ class Show {
                 seasons
             )
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
-            RETURNING                 api_id,
+            RETURNING
+                id,
+                api_id,
                 title,
                 rating,
                 first_aired,
@@ -120,7 +122,36 @@ class Show {
             `,
             [api_id]
         );
-        console.log("show find completed without errors");
+        console.log("Show.find() res.rows[0]: ", res.rows[0]);
+        return res.rows[0];
+    }
+
+    // Find show in database
+    static async dbFind(id) {
+        const res = await db.query(
+            `
+            SELECT 
+                id,                 
+                api_id,
+                title,
+                rating,
+                first_aired,
+                genre,
+                writer,
+                plot,
+                actors,
+                awards,
+                episode_length,
+                image_url,
+                years,
+                imdb_rating,
+                imdb_votes,
+                seasons
+            FROM shows
+            WHERE id = $1
+            `,
+            [id]
+        );
         return res.rows[0];
     }
 }

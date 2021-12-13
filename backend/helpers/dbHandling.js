@@ -10,20 +10,27 @@ const { BadRequestError } = require("./errorHandling");
  *
  * q => query term to be saved
  *
+ * data => Database IDs of top 3 hits from each media type.
+ *
  * user => if there is a user, saves the users' query so they can reference their
  *         history later.
  */
-async function saveQuery(q, username = null) {
+async function saveQuery(query, data, username = null) {
     try {
-        const res = await Query.create(q);
+        const { songs, shows, movies } = data;
+        const res = await Query.create({
+            query,
+            songs,
+            shows,
+            movies,
+        });
         if (username) {
             const quRes = await UsersQueries.create(username, res.id);
-            console.log("query res: ", res, "users_queries res: ", quRes);
             return { query: res, users_queries: quRes };
         }
-        console.log("res: ", res);
         return res;
-    } catch {
+    } catch (e) {
+        console.error(e);
         throw new BadRequestError(
             "Problem adding query to database (saveQuery error)."
         );
@@ -42,7 +49,9 @@ async function saveToDB(table, data) {
         if (table === "movies") {
             return Movie.create(data);
         } else if (table === "shows") {
-            return Show.create(data);
+            const createdShow = await Show.create(data);
+            console.log(createdShow);
+            return createdShow;
         } else if (table === "songs") {
             return Song.create(data);
         }
@@ -58,7 +67,12 @@ async function getSearchTerms(username) {
     const searchTerms = [];
     for (let q of query_ids) {
         const term = await Query.find(q.query_id);
-        searchTerms.push(term.search_term);
+        searchTerms.push({
+            term: term.search_term,
+            topMovies: term.top_movies,
+            topSongs: term.top_songs,
+            topShows: term.top_shows,
+        });
     }
     return searchTerms;
 }

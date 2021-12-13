@@ -5,6 +5,7 @@ import useRemember from "./Helpers/useRemember";
 import Navbar from "./Common/Navbar";
 import Routing from "./Routes/Routing";
 import Backend from "./api";
+import makeTopResults from "./Helpers/makeTopResults";
 import "./Styles/App.css";
 
 export default function App() {
@@ -15,30 +16,35 @@ export default function App() {
     }
     const [user, setUser] = useState(lsUser);
     const [token, setToken] = useState(lsToken);
-
+    const [loading, setLoading] = useState(false);
     const [data, setData] = useState(null);
     const [query, setQuery] = useState("");
     const [searchedFor, setSearchedFor] = useState("");
     const [remember, setRemember] = useRemember(token, user);
 
-    const handleSearch = (evt) => {
-        evt.preventDefault();
+    const searchAPI = (q = null) => {
         async function apiSearch() {
-            const res = await Backend.searchAll(query);
+            const apiQ = q ? q : query;
+            setQuery("");
+            setLoading(true);
+            setData(null);
+            setSearchedFor(apiQ);
+            const res = await Backend.searchAll(apiQ);
             const username = user ? user.username : null;
-            console.log(
-                "current username: ",
-                username,
-                "current query: ",
-                query
+            const mediaData = res.data.mediaInfo;
+            const { movies, shows, songs } = mediaData;
+            const topResults = await makeTopResults(movies, shows, songs);
+            const userQueries = await Backend.logQuery(
+                apiQ,
+                topResults,
+                username
             );
-            await Backend.logQuery(query, username);
-            setData(() => res.data.mediaInfo);
-            setSearchedFor(() => query);
+            setData(() => mediaData);
+            setLoading(false);
             if (user) {
                 setUser((user) => ({
                     ...user,
-                    queries: [...user.queries, query],
+                    queries: userQueries.queryInfo,
                 }));
             }
         }
@@ -48,13 +54,13 @@ export default function App() {
     const contextObject = {
         dataState: { data, setData },
         queryState: { query, setQuery },
-        handlers: { handleSearch },
+        handlers: { searchAPI },
         tokenState: { token, setToken },
         userState: { user, setUser },
         rememberState: { remember, setRemember },
         searchedForState: { searchedFor, setSearchedFor },
+        loadingState: { loading, setLoading },
     };
-
     return (
         <div className="App">
             <AppContext.Provider value={contextObject}>

@@ -3,16 +3,15 @@
     color: black;
     margin-top: 10px;
     margin-bottom: 15px;
-    overflow: hidden;
-    position:sticky;
     width: 100%;
     height: 50px;
+    min-height: 50px;
     border: 1px solid black;
     border-radius: 10px;
     z-index: 999;
     display: flex;
     justify-content: space-between;
-    box-shadow: 0 3px 3px rgba(0, 0, 0, .4);
+    box-shadow: 0 5px 7px rgba(10, 10, 10, .6);
 }
 
 .test-button {
@@ -22,7 +21,8 @@
 .logo-wrapper {
     display: flex;
     align-items: center;
-    margin-left: 3%;
+    margin-left: 30px;
+    max-width: 200px;
     flex-grow: 1;
 }
 
@@ -32,11 +32,22 @@
     justify-content: space-evenly;
 }
 
+.nav-options {
+    background-color: white;
+    display: flex;
+    width: 33%;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: flex-end;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
 .nav-options > a, .logout-btn {
     background-color: lightgrey;
-    height: 100%;
-    width: 100%;
-    border-left: 1px solid black;
+    color: black;
+    height: 50px;
+    max-width: 150px;
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -45,25 +56,43 @@
     transition-duration: 300ms;
     flex-grow: 1;
     text-align: center;
+    z-index: 1;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
-.nav-options > a:hover, .logout-btn:hover {
-    background-color: orange;
+.right-end-btn {
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.nav-option-btn {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    max-width: 150px;
+    justify-content: center;
+    align-items: center;
+    background-color: lightgrey;
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    overflow:visible;
+    transition-duration: 300ms;
+}
+
+.nav-option-btn:hover {
+    box-shadow: 0 5px 7px rgba(10, 10, 10, .8);
     cursor: pointer;
+    z-index: 999;
+    transform: translate(0, -6px);
+    border: 1px solid black;
+    
 }
 
 .nav-options > a:visited {
     text-decoration: none;
     color: black;
-}
-
-.nav-options {
-    background-color: lightgrey;
-    display: flex;
-    width: 33%;
-    flex-flow: row nowrap;
-    align-items: center;
-    justify-content: space-evenly;
 }
 
 .logo-wrapper > a {
@@ -84,37 +113,58 @@
     flex-grow: 2;
     justify-content: right;
     align-items: center;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
 }
 
 .search-nav > input {
-    border-radius: 20px;
+    border-radius: 4px;
     outline: 0;
     border: 1px solid black;
-    width: 50%;
+    width: 30%;
     height: 30px;
     text-align: center;
     transition-duration: 300ms;
     margin: 0 5px;
+    box-shadow: 0 4px 5px rgba(10,10,10, .6);
 }
 
 .search-nav > input:focus {
-    width: 100%;
+    width: 60%;
 }
 
 .search-nav > button {
     width: 75px;
-    height: 30px;
-    margin: 10px;
+    min-width: 75px;
+    height: 34px;
+    margin: 0 10px;
     border-radius: 4px;
     background-color: blue;
     outline: none;
     border: 1px solid black;
     color: white;
-    /* box-shadow: 0 4px 5px rgba(10,10,10, .6); */
+    box-shadow: 0 4px 5px rgba(10,10,10, .6);
     transition-duration: 150ms;
 }
 
 .search-nav > button:active {
     background-color: white;
     color: black;
+}
+
+.logo-text-input {
+    height: 30px;
+    width: 90px;
+    background-color: white;
+    box-shadow: 0 5px 7px rgba(10,10,10,.7);
+    border-radius: 4px;
+    text-align: center;
+    border: 1px solid black;
+    font-weight: bold;
+    transition-duration: 300ms;
+}
+
+.logo-text-input:hover {
+    cursor: pointer;
+    width: 130px;
 }

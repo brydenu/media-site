@@ -1,10 +1,21 @@
 import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router";
 import AppContext from "../Helpers/Context";
+import HistoryCard from "../Common/HistoryCard";
 import Card from "../Common/Card";
 import Form from "../Common/Form";
 import Backend from "../api";
-import { useNavigate } from "react-router";
+import "../Styles/Profile.css";
 
+/**
+ * Profile page.
+ *
+ * Shows an edit user form which allows the user to change the name they initially provided.
+ *
+ * Requires correct password for change to work.
+ *
+ * Also renders history of user searches in card formats. (Cards show top 3 hits of each media type from each query)
+ */
 export default function Profile() {
     const navigate = useNavigate();
     const { user, setUser } = useContext(AppContext).userState;
@@ -40,6 +51,8 @@ export default function Profile() {
         evt.preventDefault();
         const updated = { username: user.username, ...userInput };
         const res = await Backend.updateUser(updated);
+        const { queries } = await Backend.getQueryHistory(res.user.username);
+        res.user.queries = queries;
         setUser(res.user);
         navigate("/");
     };
@@ -54,11 +67,15 @@ export default function Profile() {
             buttonLabel="Confirm changes"
         />
     );
+
     return (
-        <Card
-            header={headerContent}
-            body={bodyContent}
-            cardClass="user-profile"
-        />
+        <div className="main-profile">
+            <Card
+                header={headerContent}
+                body={bodyContent}
+                cardClass="user-profile"
+            />
+            <HistoryCard size="small" />
+        </div>
     );
 }

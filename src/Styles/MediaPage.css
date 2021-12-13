@@ -17,10 +17,11 @@
     background-color: blue;
     width: 60%;
     min-width: 700px;
+    padding: 0 20px;
     margin: 0 0 10px;
     border-radius: 4px;
     border: 1px solid black;
-    height: 40px;
+    min-height: 35px;
     color: white;
     box-shadow: 0 5px 8px rgba(10, 10, 10, .7);
     text-align: center;
@@ -41,8 +42,18 @@
 }
 
 
-.card-header {
-    width: 300px;
+.image-wrapper {
+    border-radius: 4px;
+    margin: 0;
+    padding: 5px 10px;
+    /* box-shadow: 0 5px 8px rgba(10, 10, 10, .8) */
+}
+
+.page-image {
+    border-radius: 4px;
+    margin: 0;
+    padding: 0;
+    box-shadow: 0 5px 5px rgba(10, 10, 10, .8)
 }
 
 .media-page-title {
@@ -57,15 +68,15 @@
 .card-body {
     display: flex;
     flex-flow: column nowrap;
+    margin: 0;
 }
 
-.page-image {
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
-    margin: 0;
-    padding: 0;
-    box-shadow: 0 5px 8px rgba(10, 10, 10, .8)
+.audio-player {
+    margin-bottom: 20px;
+    border: 1px solid black;
+    border-radius: 30px;
+    box-shadow: 0 5px 7px rgba(10,10,10,.6);
+    width: 500px;
 }
 
 .page-info {

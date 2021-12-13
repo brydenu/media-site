@@ -1,72 +1,50 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import AppContext from "../Helpers/Context";
 import Card from "../Common/Card";
-import MediaCard from "../Common/MediaCard";
 import Searchbar from "../Common/Searchbar";
 import "../Styles/Home.css";
 
+/**
+ * The home page.
+ *
+ * Shows just a search bar when logged in.
+ *
+ * If not logged in, will show extra buttons to sign up or login.
+ */
 export default function Home() {
-    const { data } = useContext(AppContext).dataState;
-    const { searchedFor } = useContext(AppContext).searchedForState;
-
-    const headerContent =
-        data === null ? (
-            <h1 className="home-title">
-                Welcome, use the search bar to find media!
-            </h1>
-        ) : (
-            <>
-                <Searchbar location="home" />
-                <h2 className="home-title-searched">
-                    Showing results for "{searchedFor}"
-                </h2>
-            </>
-        );
-
-    const createBody = () => {
-        const { movies, shows, songs } = data;
-        return (
-            <div className="results-all">
-                <div className="movies-wrapper media-wrapper">
-                    <h2 className="group-title">Movies</h2>
-                    <div className="movies-results media-results">
-                        {movies.map((movie) => {
-                            return (
-                                <MediaCard
-                                    mediaData={movie}
-                                    mediaClass="movie"
-                                />
-                            );
-                        })}
-                    </div>
-                </div>
-                <div className="shows-wrapper media-wrapper">
-                    <h2 className="group-title">Shows</h2>
-                    <div className="shows-results media-results">
-                        {shows.map((show) => (
-                            <MediaCard mediaData={show} mediaClass="show" />
-                        ))}
-                    </div>
-                </div>
-                <div className="songs-wrapper media-wrapper">
-                    <h2 className="group-title">Songs</h2>
-                    <div className="songs-results media-results">
-                        {songs.map((song) => {
-                            return (
-                                <MediaCard mediaData={song} mediaClass="song" />
-                            );
-                        })}
-                    </div>
-                </div>
+    const { user } = useContext(AppContext).userState;
+    const headerContent = (
+        <>
+            <h1 className="home-title">Welcome to the Media Site!</h1>
+            <Searchbar location="home" />
+        </>
+    );
+    const bodyContent = (
+        <div
+            className={
+                user
+                    ? "hidden-home-btns home-body"
+                    : "showing-home-btns home-body"
+            }
+        >
+            <h3 className="home-or">or</h3>
+            <div className="home-buttons">
+                <p>
+                    <Link to="/login" className="home-link">
+                        Log in
+                    </Link>
+                    or
+                    <Link to="signup" className="home-link">
+                        Sign up
+                    </Link>
+                </p>
             </div>
-        );
-    };
-
-    let bodyContent =
-        data === null ? <Searchbar location="home" /> : createBody();
+        </div>
+    );
 
     return (
-        <div className="main-home">
+        <div className="main main-home">
             <Card header={headerContent} body={bodyContent} cardClass="home" />
         </div>
     );

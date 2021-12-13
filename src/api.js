@@ -18,7 +18,6 @@ class Backend {
      */
     static async searchAll(term) {
         const res = await axios.get(`${BASE_URL}/search/${term}`);
-        console.log("Search response: ", res);
         return res;
     }
 
@@ -28,14 +27,27 @@ class Backend {
      *
      * mediaType => Type of media (song, movie, show)
      *
-     * id => ID of media item.
+     * id => API ID of media item.
      *
      * Returns media object containing all relevant information for solo page.
      */
-    static async getInfo(mediaType, id) {
-        const res = await axios.get(`${BASE_URL}/${mediaType}/${id}`);
-        console.log("getInfo response: ", res.data[mediaType]);
+    static async getInfo(mediaType, api_id) {
+        const res = await axios.get(`${BASE_URL}/${mediaType}/${api_id}`);
         return res.data[mediaType];
+    }
+
+    /**
+     * getInfoDB: Gets more information about a media item via database id (not api id)
+     *
+     * mediaType => Type of media (song, movie, show)
+     *
+     * id => Database ID of media item.
+     *
+     * Returns media object containing all relevant information for solo page.
+     */
+    static async getInfoDB(mediaType, id) {
+        const res = await axios.get(`${BASE_URL}/${mediaType}/db/${id}`);
+        return res.data;
     }
     /**
      * registerUser: Creates a user and adds them to the database.
@@ -46,7 +58,8 @@ class Backend {
      */
     static async registerUser(user) {
         const res = await axios.post(`${BASE_URL}/users/register`, user);
-        return res.data.token;
+        console.log(res);
+        return res.data;
     }
 
     /**
@@ -82,13 +95,16 @@ class Backend {
      *
      * query => Query typed in by user.
      *
+     * data => Database IDs of top 3 hits from each media type.
+     *
      * username => Current user's username if logged in.
      *
      * Returns object containing id of query.
      */
-    static async logQuery(query, username) {
+    static async logQuery(query, data, username) {
         const res = await axios.post(`${BASE_URL}/queries`, {
             query,
+            data,
             username,
         });
         return res.data;

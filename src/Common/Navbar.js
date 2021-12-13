@@ -10,13 +10,14 @@ export default function Navbar() {
     const { data } = useContext(AppContext).dataState;
     const { setRemember } = useContext(AppContext).rememberState;
     const navigate = useNavigate("");
+    const userId = user ? user.username : "";
 
-    const testData = (evt) => {
-        evt.preventDefault();
-        console.log("current token: ", token);
-        console.log("current user: ", user);
-        console.log("current data: ", data);
-    };
+    // const testData = (evt) => {
+    //     evt.preventDefault();
+    //     console.log("current token: ", token);
+    //     console.log("current user: ", user);
+    //     console.log("current data: ", data);
+    // };
 
     const handleLogout = () => {
         setToken("");
@@ -27,17 +28,22 @@ export default function Navbar() {
     };
     const loggedInNav = (
         <>
-            <Link to="/">Home</Link>
-            <Link to="/profile">Profile</Link>
-            <p onClick={handleLogout} className="logout-btn">
-                Logout
-            </p>
+            <Link to={`/profile/${userId}`}>
+                <p className="nav-option-btn">Profile</p>
+            </Link>
+            <div onClick={handleLogout} className="logout-btn">
+                <p className="nav-option-btn right-end-btn">Logout</p>
+            </div>
         </>
     );
     const loggedOutNav = (
         <>
-            <Link to="/signup">Sign up</Link>
-            <Link to="/login">Login</Link>
+            <Link to="/login">
+                <p className="nav-option-btn">Login</p>
+            </Link>
+            <Link to="/signup">
+                <p className="nav-option-btn right-end-btn">Sign up</p>
+            </Link>
         </>
     );
     return (
@@ -45,12 +51,15 @@ export default function Navbar() {
             <div className="logo-wrapper">
                 <Link to="/">Media Site</Link>
             </div>
-            <button className="test-button" onClick={testData}>
+            {/* <button className="test-button" onClick={testData}>
                 Test Data (TESTING)
-            </button>
+            </button> */}
             <Searchbar location="nav" />
             <div className="nav-options">
-                {token ? loggedInNav : loggedOutNav}
+                <Link to="/">
+                    <p className="nav-option-btn">Home</p>
+                </Link>
+                {user ? loggedInNav : loggedOutNav}
             </div>
         </div>
     );

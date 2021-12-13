@@ -5,6 +5,13 @@ import Form from "../Common/Form";
 import Card from "../Common/Card";
 import Backend from "../api";
 
+/**
+ * Login page.
+ *
+ * On submit, sends request using form data to backend, to attempt to login.
+ *
+ * On successful login, redirects to home page.
+ */
 export default function Login() {
     const { setToken } = useContext(AppContext).tokenState;
     const { setUser } = useContext(AppContext).userState;
@@ -49,5 +56,9 @@ export default function Login() {
             buttonLabel="Login"
         />
     );
-    return <Card header={headerContent} body={bodyContent} cardClass="login" />;
+    return (
+        <div className="main-login">
+            <Card header={headerContent} body={bodyContent} cardClass="login" />
+        </div>
+    );
 }

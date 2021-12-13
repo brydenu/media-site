@@ -39,7 +39,9 @@ export default function Form({
         if (formClass === "signup" || formClass === "login") {
             return (
                 <div className="checkbox-group" onClick={toggleRemember}>
-                    <div className={"custom-checkbox " + checkboxClass}></div>
+                    <div className="checkbox-outer">
+                        <div className={"custom-checkbox " + checkboxClass} />
+                    </div>
                     <p className="remembered-label">
                         Stay signed in on this browser?
                     </p>
@@ -65,10 +67,12 @@ export default function Form({
                     </div>
                 );
             })}
-            {rememberUser()}
-            <button onClick={handleSubmit} className="form-button">
-                {buttonLabel}
-            </button>
+            <div className="clickables-group">
+                {rememberUser()}
+                <div onClick={handleSubmit} className="form-button">
+                    {buttonLabel}
+                </div>
+            </div>
         </form>
     );
 }

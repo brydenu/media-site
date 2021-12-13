@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import AppContext from "../Helpers/Context";
 import "../Styles/Searchbar.css";
 
-export default function Searchbar({ location }) {
-    const { setQuery } = useContext(AppContext).queryState;
-    const { handleSearch } = useContext(AppContext).handlers;
+export default function Searchbar({ location, className }) {
+    const { query, setQuery } = useContext(AppContext).queryState;
+    const { searchAPI } = useContext(AppContext).handlers;
     const { searchedFor } = useContext(AppContext).searchedForState;
     const navigate = useNavigate();
 
@@ -15,19 +15,26 @@ export default function Searchbar({ location }) {
     };
 
     const handleSubmit = (evt) => {
-        handleSearch(evt);
-        navigate("/");
+        evt.preventDefault();
+        searchAPI();
+        navigate(`/search`);
     };
     const generateSearchHeader = () => {
-        if (searchedFor && location === "home") {
-            return <h1 className="searched-header-title">Search again:</h1>;
+        if (searchedFor && location === "search") {
+            return <h2 className={"searched-header-title"}>Search again:</h2>;
+        } else if (location === "home") {
+            return (
+                <h2 className={"searched-header-title"}>
+                    Use the search bar to find media
+                </h2>
+            );
         }
     };
     return (
         <>
             <form
                 className={`search search-${location}`}
-                onSubmit={handleSearch}
+                onSubmit={handleSubmit}
             >
                 {generateSearchHeader()}
                 <input
@@ -35,8 +42,9 @@ export default function Searchbar({ location }) {
                     name="q"
                     onChange={handleChange}
                     autoComplete="off"
+                    value={query}
                 />
-                <button type="button" onClick={handleSubmit}>
+                <button type="submit" className="searchbar-btn">
                     Search
                 </button>
             </form>

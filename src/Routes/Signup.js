@@ -15,6 +15,7 @@ export default function Signup() {
         lastName: "",
         password: "",
     });
+    const [usernameError, setUsernameError] = useState(false);
     const headerContent = <h1 className="signup-title">Sign up</h1>;
     const formFields = [
         {
@@ -44,9 +45,14 @@ export default function Signup() {
     ];
     const handleSubmit = async (evt) => {
         evt.preventDefault();
-        const newToken = await Backend.registerUser(userInput);
-        setToken(newToken);
-        setUser(userInput);
+        const data = await Backend.registerUser(userInput);
+        if (data.error) {
+            setUsernameError(true);
+            return;
+        }
+        const newUser = data.user;
+        newUser.queries = [];
+        setUser(newUser);
         navigate("/");
     };
     const bodyContent = (
