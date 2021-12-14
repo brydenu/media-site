@@ -151,3 +151,16 @@
     background-color: white;
     color: black;
 }
+
+.form-error {
+    color: red;
+}
+
+.showing-error {
+    /* height: */
+}
+
+.hiding-error {
+    height: 0;
+    max-height: 0;
+}

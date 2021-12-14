@@ -21,7 +21,7 @@ export default function Form({
     buttonLabel,
 }) {
     const { remember, setRemember } = useContext(AppContext).rememberState;
-    const { errorState } = useContext(AppContext).errorState;
+    const { errorState, setErrorState } = useContext(AppContext).errorState;
     const setInput = inputState[1];
     const handleChange = (evt) => {
         const { name, value } = evt.target;
