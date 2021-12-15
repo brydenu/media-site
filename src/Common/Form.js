@@ -5,13 +5,17 @@ import "../Styles/Form.css";
 /**
  * Custom form component
  *
- * fields => an array with keys for label, type, fieldName.
+ * fields: Array with keys for label, type, fieldName.
  *
- * formClass => class name of entire form.
+ * formClass: Class name of entire form.
  *
- * handleSubmit => event handler when form is submitted.
+ * handleSubmit: Event handler when form is submitted.
  *
- * inputState => array of [state, setState] for useState used in handleChange.
+ * inputState: Array of [state, setState] for useState used in handleChange.
+ *
+ * buttonLabel: The text that should be displayed on the button
+ *
+ * errorMessage: Message if something goes wrong ("Invalid username/password", "Username already exists", etc)
  */
 export default function Form({
     fields,

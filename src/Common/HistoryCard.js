@@ -5,9 +5,23 @@ import getPrettyHistory from "../Helpers/getPrettyHistory";
 import DEFAULT_IMAGE from "./img-not-found.jpeg";
 import Card from "./Card";
 
+/**
+ * HistoryCard: Renders a card with the top 3 results of each media type along with the query.
+ *
+ * size: Determines what size for the card. For now, this is only used in the profile tab and is "small". But can be made to
+ * be a page size, which is something I would like to add.
+ *
+ */
 export default function HistoryCard({ size = "page" }) {
     const { user } = useContext(AppContext).userState;
     const [history, setHistory] = useState([]);
+
+    /**
+     * Must get history first, and organize it to be ready for display.
+     *
+     * User queries are already saved, so its only a matter of dissecting the first 3 hits of each media type
+     * per query, and getting those results again to be displayed on the card.
+     */
     useEffect(() => {
         async function getHistory() {
             const h = await getPrettyHistory(user.queries);
@@ -15,25 +29,23 @@ export default function HistoryCard({ size = "page" }) {
         }
         getHistory();
     }, [user]);
-    const generateHistory = () => {
-        const histHeader = (
-            <div className="profile-title">
-                {user.username}'s previous searches:
-            </div>
-        );
-        return (
-            <Card
-                header={histHeader}
-                body={generateHistBody()}
-                cardClass="user-history"
-            />
-        );
-    };
 
+    /**
+     * Creates the body of the history card. Checks each query and the information along with it, and
+     * creates history cards for each query.
+     */
     function generateHistBody() {
+        /**
+         * Show a spinner until the history is updated.
+         */
         if (!history.length) {
             return <LoadingSpinner loaderClass="profile-loader" />;
         }
+        /**
+         * If A search term didn't get any results, instead of showing a blank or
+         * strangely styled card, instead handle it by explaining that that
+         * particular query did not have any successful results.
+         */
         return (
             <div className="history-wrapper showing-history">
                 {history.map((mediaType) => {
@@ -136,6 +148,9 @@ export default function HistoryCard({ size = "page" }) {
         );
     }
 
+    /**
+     * If the user does not have any queries, show a different message.
+     */
     if (!user.queries.length)
         return (
             <div className="profile-no-queries history-wrapper card-wrapper">
@@ -149,5 +164,20 @@ export default function HistoryCard({ size = "page" }) {
                 </p>
             </div>
         );
+
+    const generateHistory = () => {
+        const histHeader = (
+            <div className="profile-title">
+                {user.username}'s previous searches:
+            </div>
+        );
+        return (
+            <Card
+                header={histHeader}
+                body={generateHistBody()}
+                cardClass="user-history"
+            />
+        );
+    };
     return generateHistory();
 }

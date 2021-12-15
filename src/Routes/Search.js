@@ -24,6 +24,10 @@ export default function Search() {
     const [showingSearch, setShowingSearch] = useState(false);
     const showSearchClass = showingSearch ? "show-searchbar" : "hide-searchbar";
 
+    /**
+     * If the search came from a url query string rather than the search
+     * bar, take the query and send a request for datato the backend.
+     */
     useEffect(() => {
         const q = searchParams.get("q");
         if (q && !loading && !data) {
@@ -36,20 +40,22 @@ export default function Search() {
         if (!q || q === "") setSearchParams({ q: searchedFor });
     });
 
-    const headerContent =
-        data === null ? (
-            <h1 className="home-title">
-                Welcome, use the search bar to find media!
-            </h1>
-        ) : (
-            <Searchbar location="search" className={showSearchClass} />
-        );
+    const headerContent = (
+        <Searchbar location="search" className={showSearchClass} />
+    );
 
+    /**
+     * Toggles the searchbar by changing the state of "showingSearch".
+     */
     const toggleSearchbar = (evt) => {
         evt.preventDefault();
         setShowingSearch((currentState) => !currentState);
     };
 
+    /**
+     * Creates media cards for each piece of data recieved from backend. As long as the data state has data,
+     * it will be formatted and put into MediaCards.
+     */
     const generateResults = (data, type) => {
         if (!data || data.length === 0) {
             return (
@@ -60,6 +66,10 @@ export default function Search() {
             <MediaCard mediaData={item} mediaClass={type} />
         ));
     };
+
+    /**
+     * Main format of the page, rendering media cards for each result using above function.
+     */
     const createBody = () => {
         const { movies, shows, songs } = data;
         return (
@@ -100,6 +110,9 @@ export default function Search() {
         );
     };
 
+    /**
+     * While there is not data, a loading spinner page should show up to let the user know the app is working.
+     */
     if (!data) {
         return <LoadingPage />;
     }

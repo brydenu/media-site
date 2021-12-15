@@ -13,7 +13,7 @@ import Backend from "../api";
  * On successful login, redirects to home page.
  */
 export default function Login() {
-    const { setToken } = useContext(AppContext).tokenState;
+    // const { setToken } = useContext(AppContext).tokenState;
     const { setUser } = useContext(AppContext).userState;
     const navigate = useNavigate();
     const [errorMessage, setErrorMessage] = useState("");
@@ -23,6 +23,9 @@ export default function Login() {
     });
     const headerContent = <h1 className="login-title">Login</h1>;
 
+    /**
+     * Form array to send to <Form /> component.
+     */
     const formFields = [
         {
             label: "Username",
@@ -38,6 +41,11 @@ export default function Login() {
         },
     ];
 
+    /**
+     * Requests authentication from backend. On success, logs user in and redirects to home screen.
+     *
+     * If there is a problem, the recieved error message will be displayed above the submit button.
+     */
     const handleSubmit = async (evt) => {
         evt.preventDefault();
         const res = await Backend.loginUser(userInput);
@@ -48,7 +56,7 @@ export default function Login() {
         }
         const { queries } = await Backend.getQueryHistory(res.user.username);
         res.user.queries = queries;
-        setToken(res.token);
+        // setToken(res.token);
         setUser(res.user);
         navigate("/");
     };

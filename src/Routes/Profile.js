@@ -54,6 +54,13 @@ export default function Profile() {
         },
     ];
 
+    /**
+     * Sends patch request to backend based on what the user wanted to update.
+     *
+     * Requires correct password.
+     *
+     * Shows an error message if password incorrect (or if there are other problems).
+     */
     const handleSubmit = async (evt) => {
         evt.preventDefault();
         const updated = { username: user.username, ...userInput };

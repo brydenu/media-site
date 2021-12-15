@@ -7,7 +7,9 @@ function getIds(arr, time) {
     }
     return ids;
 }
-
+/**
+ * Creates the topShows, topSongs, and topMovies as formatted in users.queries.
+ */
 async function makeTopResults(topMovies, topShows, topSongs) {
     const songs = topSongs ? getIds(topSongs).join(".") : "";
     const movies = topMovies ? getIds(topMovies).join(".") : "";

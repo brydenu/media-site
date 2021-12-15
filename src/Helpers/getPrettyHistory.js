@@ -1,5 +1,13 @@
 import Backend from "../api";
 
+/**
+ * getPrettyHistory
+ *
+ * Query history in users is stored in an array of objects, where each object includes "query" (the search term),
+ * and three properties "topMovies"," topShows", and "topSongs". These properties are strings of the database id
+ * seperated by ".". This function splits them up and gets the information for each to be shown in the user profile page.
+ *
+ */
 export default async function getPrettyHistory(queries) {
     const data = [];
     for (let query of queries) {

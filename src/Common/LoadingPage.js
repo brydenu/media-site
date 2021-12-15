@@ -3,14 +3,13 @@ import AppContext from "../Helpers/Context";
 import LoadingSpinner from "./LoadingSpinner";
 import "../Styles/Loading.css";
 
+/**
+ * Renders while the backend queries APIs for information. Uses a the <LoadingSpinner /> component.
+ */
 export default function LoadingPage() {
     const { data } = useContext(AppContext).dataState;
     const { setLoading } = useContext(AppContext).loadingState;
 
-    if (data) {
-        setLoading(true);
-        // return <Search />;
-    }
     return (
         <div className="loading-wrapper">
             <div className="loading-content">

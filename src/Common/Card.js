@@ -1,6 +1,9 @@
 import React from "react";
 import "../Styles/Card.css";
 
+/**
+ * Base of most components and pages on the site. Can be very configurable and used as a uniform template.
+ */
 export default function Card({
     header,
     body,

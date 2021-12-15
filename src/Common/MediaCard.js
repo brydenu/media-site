@@ -5,8 +5,14 @@ import DEFAULT_IMAGE from "./img-not-found.jpeg";
 import shortenText from "../Helpers/shortenText";
 import "../Styles/MediaCard.css";
 
-/** MeidaCard => (mediaData, mediaType)
+/**
+ * MediaCard: The display format for search results. These cards do not have too much information on them, as
+ *            you can click on each one to render a main page (<MediaPage />)for each media item which will include more info.
  *
+ * mediaData: Media information to be used. For media cards, only the image_url, title, and depending on the
+ *            media type, year released or artist/group name.
+ *
+ * mediaType: "movie", "show", or "song" Determines which pieces of information to show, as well as styling.
  */
 export default function MediaCard({ mediaData, mediaClass }) {
     const { title, api_id } = mediaData;

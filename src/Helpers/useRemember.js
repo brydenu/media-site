@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 
+/**
+ * Used to save users to localStorage if they want to be remembered on a browser.
+ */
 export default function useRemember(token, user) {
     const [remember, setRemember] = useState(false);
 

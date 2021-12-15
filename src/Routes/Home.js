@@ -20,6 +20,12 @@ export default function Home() {
             <Searchbar location="home" />
         </>
     );
+
+    /**
+     * If no user is found logged in, search bar will show buttons to get to /login and /signup.
+     *
+     * Otherwise, just show the search bar.
+     */
     const bodyContent = (
         <div
             className={
