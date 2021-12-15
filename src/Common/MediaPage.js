@@ -4,6 +4,7 @@ import Card from "./Card";
 import Backend from "../api";
 import LoadingSpinner from "./LoadingSpinner";
 import DEFAULT_IMAGE from "./img-not-found.jpeg";
+import NotFoundPage from "../Routes/NotFoundPage";
 import "../Styles/MediaPage.css";
 
 /**
@@ -37,6 +38,7 @@ export default function MediaPage({ mediaType }) {
         [id, mediaType]
     );
 
+    if (pageInfo.error) return <NotFoundPage />;
     /**
      * Generates correct card with correct information depending on media type.
      * Populates fields with said information.

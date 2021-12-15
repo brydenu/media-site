@@ -1,12 +1,18 @@
 const express = require("express");
 const Movie = require("../models/movie");
 const { getMovieById } = require("../helpers/apiHandling");
+const { NotFoundError } = require("../helpers/errorHandling");
 
 const router = express.Router();
 
 router.get("/:id", async function (req, res, next) {
     try {
         const id = req.params.id;
+        if (id.substring(0, 1) !== "tt") {
+            throw new NotFoundError(
+                "Movie and show IDs must start with 'tt' to be referenced with IMDb"
+            );
+        }
         const movie = await Movie.find(id);
         if (movie) {
             return res.json({ movie });
