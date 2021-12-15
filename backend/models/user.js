@@ -81,7 +81,6 @@ class User {
                     password,
                     user.password
                 );
-                console.log("passwordIsValid: ", passwordIsValid);
                 if (passwordIsValid) {
                     delete user.password;
                     console.log("user: ", user);
@@ -90,53 +89,70 @@ class User {
             }
             throw new UnauthorizedError("Invalid username or password.");
         } catch (e) {
-            throw new BadRequestError();
+            throw new BadRequestError(e);
         }
     }
 
     static async update(username, data) {
-        let { password, first_name, last_name } = data;
-        let toUpdate = "";
-        let updateVars = [username];
-        if (password) {
-            password = await bcrypt.hash(data.password, BCRYPT_WORK_FACTOR);
-            toUpdate += "password = $2";
-            updateVars.push(password);
-        }
-        if (first_name) {
-            if (updateVars.length === 1) {
-                toUpdate = "first_name = $2";
-            } else {
-                toUpdate += `, first_name = $${updateVars.length + 1}`;
+        try {
+            let { newPassword, password, first_name, last_name } = data;
+            const passRes = await db.query(
+                `SELECT username, password FROM users WHERE username=$1`,
+                [username]
+            );
+            const userPassword = passRes.rows[0];
+            const validPassword = await bcrypt.compare(
+                password,
+                userPassword.password
+            );
+            if (!validPassword) throw new UnauthorizedError("Invalid password");
+            let toUpdate = "";
+            let updateVars = [username];
+            if (newPassword) {
+                const newPass = await bcrypt.hash(
+                    newPassword,
+                    BCRYPT_WORK_FACTOR
+                );
+                toUpdate += "password = $2";
+                updateVars.push(newPass);
             }
-            updateVars.push(first_name);
-        }
-        if (last_name) {
-            if (updateVars.length === 1) {
-                toUpdate = "last_name = $2";
-            } else {
-                toUpdate += `, last_name = $${updateVars.length + 1}`;
+            if (first_name) {
+                if (updateVars.length === 1) {
+                    toUpdate = "first_name = $2";
+                } else {
+                    toUpdate += `, first_name = $${updateVars.length + 1}`;
+                }
+                updateVars.push(first_name);
             }
-            updateVars.push(last_name);
-        }
+            if (last_name) {
+                if (updateVars.length === 1) {
+                    toUpdate = "last_name = $2";
+                } else {
+                    toUpdate += `, last_name = $${updateVars.length + 1}`;
+                }
+                updateVars.push(last_name);
+            }
 
-        const res = await db.query(
-            `
+            const res = await db.query(
+                `
             UPDATE users
             SET ${toUpdate}
             WHERE username = $1
             RETURNING username, 
                       first_name AS "firstName",
                       last_name AS "lastName"`,
-            updateVars
-        );
+                updateVars
+            );
 
-        const user = res.rows[0];
+            const user = res.rows[0];
 
-        if (!user) throw new NotFoundError(`User "${username}" not found.`);
+            if (!user) throw new NotFoundError(`User "${username}" not found.`);
 
-        delete user.password;
-        return user;
+            delete user.password;
+            return user;
+        } catch (e) {
+            throw new BadRequestError(e);
+        }
     }
 }
 

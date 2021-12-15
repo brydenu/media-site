@@ -82,10 +82,12 @@ class Backend {
      * Returns updated user object.
      */
     static async updateUser(user) {
+        console.log("updateUser user: ", user);
         const res = await axios.patch(
             `${BASE_URL}/users/${user.username}`,
             user
         );
+        console.log("update response: ", res.data);
         return res.data;
     }
 

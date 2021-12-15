@@ -16,7 +16,7 @@ class ErrorHandling extends Error {
 
 class NotFoundError extends ErrorHandling {
     constructor(message) {
-        super("404 - Not found: " + message, 404);
+        super(message, 404);
     }
 }
 
@@ -26,7 +26,7 @@ class NotFoundError extends ErrorHandling {
 
 class UnauthorizedError extends ErrorHandling {
     constructor(message) {
-        super("401 - You are not authorized for this request: " + message, 401);
+        super(message, 401);
     }
 }
 
@@ -36,7 +36,7 @@ class UnauthorizedError extends ErrorHandling {
 
 class BadRequestError extends ErrorHandling {
     constructor(message) {
-        super("400 - Bad Request: " + message, 400);
+        super(message, 400);
     }
 }
 

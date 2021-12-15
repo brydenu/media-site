@@ -19,9 +19,9 @@ export default function Form({
     handleSubmit,
     inputState,
     buttonLabel,
+    errorMessage = "",
 }) {
     const { remember, setRemember } = useContext(AppContext).rememberState;
-    const { errorState, setErrorState } = useContext(AppContext).errorState;
     const setInput = inputState[1];
     const handleChange = (evt) => {
         const { name, value } = evt.target;
@@ -71,13 +71,11 @@ export default function Form({
             <div className="clickables-group">
                 {rememberUser()}
                 <div
-                    className={
-                        "form-error " + errorState
-                            ? "showing-error"
-                            : "hiding-error"
-                    }
+                    className={`form-error ${
+                        errorMessage ? "showing-error" : "hiding-error"
+                    }`}
                 >
-                    {errorState ? errorState.message : ""}
+                    {errorMessage}
                 </div>
                 <button type="submit" className="form-button">
                     {buttonLabel}

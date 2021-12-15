@@ -16,6 +16,7 @@ export default function Login() {
     const { setToken } = useContext(AppContext).tokenState;
     const { setUser } = useContext(AppContext).userState;
     const navigate = useNavigate();
+    const [errorMessage, setErrorMessage] = useState("");
     const [userInput, setUserInput] = useState({
         username: "",
         password: "",
@@ -40,6 +41,11 @@ export default function Login() {
     const handleSubmit = async (evt) => {
         evt.preventDefault();
         const res = await Backend.loginUser(userInput);
+        if (res.error) {
+            console.log(res.error);
+            setErrorMessage(res.error.message);
+            return;
+        }
         const { queries } = await Backend.getQueryHistory(res.user.username);
         res.user.queries = queries;
         setToken(res.token);
@@ -54,6 +60,7 @@ export default function Login() {
             handleSubmit={handleSubmit}
             inputState={[userInput, setUserInput]}
             buttonLabel="Login"
+            errorMessage={errorMessage}
         />
     );
     return (

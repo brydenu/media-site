@@ -154,13 +154,16 @@
 
 .form-error {
     color: red;
+    transition-duration: 500ms;
 }
 
 .showing-error {
-    /* height: */
+    height: 18px;
+    max-height: 18px;
 }
 
 .hiding-error {
     height: 0;
     max-height: 0;
+    opacity: 0;
 }

@@ -9,6 +9,7 @@ const queriesEndpoints = require("./endpoints/queries");
 const movieEndpoints = require("./endpoints/movie");
 const showEndpoints = require("./endpoints/show");
 const songEndpoints = require("./endpoints/song");
+const { NotFoundError } = require("./helpers/errorHandling");
 
 const app = express();
 
@@ -23,8 +24,16 @@ app.use("/show", showEndpoints);
 app.use("/song", songEndpoints);
 
 app.use(function (req, res, next) {
-    console.log("!!!~~~~~~~~~~~~~~~~~~~~404~~~~~~~~~~~~~~~~~~~~!!!");
-    console.log(req);
+    return next(new NotFoundError());
+});
+
+app.use(function (err, req, res, next) {
+    console.error(err.stack);
+    const error = err.message;
+
+    return res.json({
+        error,
+    });
 });
 
 module.exports = app;

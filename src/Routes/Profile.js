@@ -19,6 +19,7 @@ import "../Styles/Profile.css";
 export default function Profile() {
     const navigate = useNavigate();
     const { user, setUser } = useContext(AppContext).userState;
+    const [errorMessage, setErrorMessage] = useState("");
     const [userInput, setUserInput] = useState({
         password: "",
         firstName: "",
@@ -40,7 +41,13 @@ export default function Profile() {
             required: false,
         },
         {
-            label: "Password",
+            label: "Change password",
+            type: "password",
+            fieldName: "newPassword",
+            required: false,
+        },
+        {
+            label: "Password required to confirm changes",
             type: "password",
             fieldName: "password",
             required: true,
@@ -51,6 +58,10 @@ export default function Profile() {
         evt.preventDefault();
         const updated = { username: user.username, ...userInput };
         const res = await Backend.updateUser(updated);
+        if (res.error) {
+            setErrorMessage(res.error.message);
+            return;
+        }
         const { queries } = await Backend.getQueryHistory(res.user.username);
         res.user.queries = queries;
         setUser(res.user);
@@ -65,6 +76,7 @@ export default function Profile() {
             handleSubmit={handleSubmit}
             inputState={[userInput, setUserInput]}
             buttonLabel="Confirm changes"
+            errorMessage={errorMessage}
         />
     );
 

@@ -31,7 +31,14 @@ router.post("/register", async function (req, res, next) {
             });
         const user = await User.create(userInfo);
         // const token = createToken(user);
-        return res.status(201).json({ user });
+        return res.status(201).json({
+            user: {
+                username: user.username,
+                firstName: user.first_name,
+                lastName: user.last_name,
+                queries: [],
+            },
+        });
     } catch (e) {
         return next(e);
     }
@@ -44,10 +51,9 @@ router.post("/login", async function (req, res, next) {
     try {
         const { username, password } = req.body;
         const user = await User.authenticate(username, password);
-        const token = createToken(user);
         const queries = await getSearchTerms(user.username);
         user.queries = queries;
-        return res.json({ token, user });
+        return res.json({ user });
     } catch (e) {
         return next(e);
     }
@@ -61,6 +67,7 @@ router.patch("/:username", async function (req, res, next) {
         const sqlUser = {
             username: req.params.username,
             password: req.body.password,
+            newPassword: req.body.newPassword,
             first_name: req.body.firstName,
             last_name: req.body.lastName,
         };

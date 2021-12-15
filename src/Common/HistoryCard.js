@@ -34,11 +34,9 @@ export default function HistoryCard({ size = "page" }) {
         if (!history.length) {
             return <LoadingSpinner loaderClass="profile-loader" />;
         }
-        let count = 0;
         return (
             <div className="history-wrapper showing-history">
                 {history.map((mediaType) => {
-                    count++;
                     if (
                         (!mediaType.movies.length && !mediaType.shows.length) ||
                         (!mediaType.movies.length && !mediaType.songs.length) ||
@@ -137,5 +135,19 @@ export default function HistoryCard({ size = "page" }) {
             </div>
         );
     }
+
+    if (!user.queries.length)
+        return (
+            <div className="profile-no-queries history-wrapper card-wrapper">
+                <h3>
+                    You haven't searched for anything yet! Use the search bar
+                    above or at the home screen to search for media info!
+                </h3>
+                <p>
+                    History cards with the top results for each search will
+                    appear here once you've searched for something.
+                </p>
+            </div>
+        );
     return generateHistory();
 }

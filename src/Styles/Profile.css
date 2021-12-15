@@ -76,3 +76,13 @@
     width: 100%;
     height: 100%;
 }
+
+.profile-no-queries {
+    min-height: 150px;
+    align-items: center;
+    align-content: center;
+}
+
+.form-error {
+    margin: 8px;
+}

@@ -6,9 +6,9 @@ import Form from "../Common/Form";
 import Backend from "../api";
 
 export default function Signup() {
-    const { setToken } = useContext(AppContext).tokenState;
-    const { setUser } = useContext(AppContext).userState;
-    const { errorState, setErrorState } = useContext(AppContext).errorState;
+    // const { setToken } = useContext(AppContext).tokenState;
+    const { user, setUser } = useContext(AppContext).userState;
+    const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
     const [userInput, setUserInput] = useState({
         username: "",
@@ -16,6 +16,7 @@ export default function Signup() {
         lastName: "",
         password: "",
     });
+
     const headerContent = <h1 className="signup-title">Sign up</h1>;
     const formFields = [
         {
@@ -47,29 +48,27 @@ export default function Signup() {
         evt.preventDefault();
         const data = await Backend.registerUser(userInput);
         if (data.error) {
-            setErrorState(data.error);
+            setErrorMessage(data.error.message);
             return;
         }
-        setErrorState(null);
-        const newUser = data.user;
-        newUser.queries = [];
-        setUser(newUser);
+        setUser(data.user);
         navigate("/");
     };
-    const bodyContent = (
+    const generateBody = () => (
         <Form
             fields={formFields}
             formClass="signup"
             handleSubmit={handleSubmit}
             inputState={[userInput, setUserInput]}
             buttonLabel="Register"
+            errorMessage={errorMessage}
         />
     );
     return (
         <div className="main-signup">
             <Card
                 header={headerContent}
-                body={bodyContent}
+                body={generateBody()}
                 cardClass="signup"
             />
         </div>
