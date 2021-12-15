@@ -73,6 +73,10 @@
     padding: 3px;
 }
 
+.history-card-images:hover {
+    cursor: pointer;
+}
+
 .history-image {
     max-width: 100px;
     max-height: 150px;
