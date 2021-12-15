@@ -38,7 +38,10 @@ export default function MediaPage({ mediaType }) {
         [id, mediaType]
     );
 
-    if (pageInfo.error) return <NotFoundPage />;
+    if (pageInfo && pageInfo.error) {
+        console.log("error from pageInfo: ", pageInfo);
+        return <NotFoundPage setPageInfo={setPageInfo} />;
+    }
     /**
      * Generates correct card with correct information depending on media type.
      * Populates fields with said information.

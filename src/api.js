@@ -33,6 +33,7 @@ class Backend {
      */
     static async getInfo(mediaType, api_id) {
         const res = await axios.get(`${BASE_URL}/${mediaType}/${api_id}`);
+        console.log(res);
         if (res.data.error) return res.data;
         return res.data[mediaType];
     }

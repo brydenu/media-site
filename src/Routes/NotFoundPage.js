@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Card from "../Common/Card";
 import "../Styles/NotFoundPage.css";
 
-export default function NotFoundPage() {
+export default function NotFoundPage({ setPageInfo }) {
     const headerContent = (
         <h1 className="404-title">404... We couldn't find that.</h1>
     );

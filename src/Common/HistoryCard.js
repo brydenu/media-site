@@ -4,6 +4,7 @@ import LoadingSpinner from "./LoadingSpinner";
 import getPrettyHistory from "../Helpers/getPrettyHistory";
 import DEFAULT_IMAGE from "./img-not-found.jpeg";
 import Card from "./Card";
+import { useNavigate } from "react-router-dom";
 
 /**
  * HistoryCard: Renders a card with the top 3 results of each media type along with the query.
@@ -13,8 +14,10 @@ import Card from "./Card";
  *
  */
 export default function HistoryCard({ size = "page" }) {
+    const { setData } = useContext(AppContext).dataState;
     const { user } = useContext(AppContext).userState;
     const [history, setHistory] = useState([]);
+    const navigate = useNavigate();
 
     /**
      * Must get history first, and organize it to be ready for display.
@@ -70,7 +73,13 @@ export default function HistoryCard({ size = "page" }) {
                             <p className="history-card-title">
                                 "{mediaType.term}"
                             </p>
-                            <div className="history-card-images">
+                            <div
+                                className="history-card-images"
+                                onClick={() => {
+                                    setData(null);
+                                    navigate(`/search?q=${mediaType.term}`);
+                                }}
+                            >
                                 <div className="movie-history">
                                     {mediaType.movies.map(({ movie }) => {
                                         if (!movie)
@@ -168,7 +177,7 @@ export default function HistoryCard({ size = "page" }) {
     const generateHistory = () => {
         const histHeader = (
             <div className="profile-title">
-                {user.username}'s previous searches:
+                <h3>{user.username}'s previous searches:</h3>
             </div>
         );
         return (
