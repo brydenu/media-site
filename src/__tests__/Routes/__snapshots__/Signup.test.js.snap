@@ -1,0 +1,128 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="main-signup"
+  >
+    <div
+      class="card-wrapper signup"
+    >
+      <div
+        class="card-content signup"
+      >
+        <div
+          class="card-header "
+        >
+          <h1
+            class="signup-title"
+          >
+            Sign up
+          </h1>
+        </div>
+        <div
+          class="card-body signup"
+        >
+          <form
+            class="custom-form signup"
+          >
+            <div
+              class="form-group username"
+            >
+              <label
+                for="username"
+              >
+                Username
+              </label>
+              <input
+                autocomplete="off"
+                name="username"
+                placeholder=""
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="form-group firstName"
+            >
+              <label
+                for="firstName"
+              >
+                First Name
+              </label>
+              <input
+                autocomplete="off"
+                name="firstName"
+                placeholder=""
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="form-group lastName"
+            >
+              <label
+                for="lastName"
+              >
+                Last Name
+              </label>
+              <input
+                autocomplete="off"
+                name="lastName"
+                placeholder=""
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="form-group password"
+            >
+              <label
+                for="password"
+              >
+                Password
+              </label>
+              <input
+                autocomplete="off"
+                name="password"
+                placeholder=""
+                type="password"
+                value=""
+              />
+            </div>
+            <div
+              class="clickables-group"
+            >
+              <div
+                class="checkbox-group"
+              >
+                <div
+                  class="checkbox-outer"
+                >
+                  <div
+                    class="custom-checkbox remembered-false"
+                  />
+                </div>
+                <p
+                  class="remembered-label"
+                >
+                  Stay signed in on this browser?
+                </p>
+              </div>
+              <div
+                class="form-error hiding-error"
+              />
+              <button
+                class="form-button"
+                type="submit"
+              >
+                Register
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

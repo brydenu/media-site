@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="main main-home"
+  >
+    <div
+      class="card-wrapper home"
+    >
+      <div
+        class="card-content home"
+      >
+        <div
+          class="card-header "
+        >
+          <h1
+            class="home-title"
+          >
+            Welcome to the Media Site!
+          </h1>
+          <form
+            class="search search-home"
+          >
+            <h2
+              class="searched-header-title"
+            >
+              Use the search bar to find media
+            </h2>
+            <input
+              autocomplete="off"
+              name="q"
+              placeholder=""
+              type="text"
+              value=""
+            />
+            <button
+              class="searchbar-btn"
+              type="submit"
+            >
+              Search
+            </button>
+          </form>
+        </div>
+        <div
+          class="card-body home"
+        >
+          <div
+            class="hidden-home-btns home-body"
+          >
+            <h3
+              class="home-or"
+            >
+              or
+            </h3>
+            <div
+              class="home-buttons"
+            >
+              <p>
+                <a
+                  class="home-link"
+                  href="/login"
+                >
+                  Log in
+                </a>
+                or
+                <a
+                  class="home-link"
+                  href="/signup"
+                >
+                  Sign up
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

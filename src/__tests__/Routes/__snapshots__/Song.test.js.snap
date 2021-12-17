@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="back-btn"
+  >
+    Go Back
+  </div>
+  <div
+    class="card-wrapper media-page main song"
+  >
+    <div
+      class="card-content media-page main song"
+    >
+      <div
+        class="card-header "
+      >
+        <h1>
+          Loading
+        </h1>
+      </div>
+      <div
+        class="card-body media-page main song"
+      >
+        <div
+          class="lds-default loading-animation"
+        >
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+          <div />
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="main-login"
+  >
+    <div
+      class="card-wrapper login"
+    >
+      <div
+        class="card-content login"
+      >
+        <div
+          class="card-header "
+        >
+          <h1
+            class="login-title"
+          >
+            Login
+          </h1>
+        </div>
+        <div
+          class="card-body login"
+        >
+          <form
+            class="custom-form login"
+          >
+            <div
+              class="form-group username"
+            >
+              <label
+                for="username"
+              >
+                Username
+              </label>
+              <input
+                autocomplete="off"
+                name="username"
+                placeholder=""
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="form-group password"
+            >
+              <label
+                for="password"
+              >
+                Password
+              </label>
+              <input
+                autocomplete="off"
+                name="password"
+                placeholder=""
+                type="password"
+                value=""
+              />
+            </div>
+            <div
+              class="clickables-group"
+            >
+              <div
+                class="checkbox-group"
+              >
+                <div
+                  class="checkbox-outer"
+                >
+                  <div
+                    class="custom-checkbox remembered-false"
+                  />
+                </div>
+                <p
+                  class="remembered-label"
+                >
+                  Stay signed in on this browser?
+                </p>
+              </div>
+              <div
+                class="form-error hiding-error"
+              />
+              <button
+                class="form-button"
+                type="submit"
+              >
+                Login
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
